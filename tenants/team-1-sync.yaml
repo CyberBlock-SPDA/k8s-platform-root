@@ -3,7 +3,7 @@ kind: GitRepository
 metadata: {name: k8s-apps-infrastructure, namespace: team-1}
 spec:
   interval: 5m
-  url: ssh://git@github.com/CyberBlock/k8s-apps-infrastructure
+  url: ssh://git@github.com/CyberBlock-SPDA/k8s-apps-infrastructure
   ref: {branch: main}
   secretRef: {name: apps-infra-read}
 ---
