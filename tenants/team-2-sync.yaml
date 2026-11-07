@@ -1,0 +1,20 @@
+#TODO: replace XXX strings
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata: {name: XXX-apps-infrastructure, namespace: team-2}
+spec:
+  interval: 5m
+  url: ssh://git@github.com/XXX
+  ref: {branch: main}
+  secretRef: {name: apps-infra-read}
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata: {name: apps-infra, namespace: team-2}
+spec:
+  interval: 10m
+  path: .XXX/deploy/prod # root of teams infrastructure
+  prune: true
+  wait: true
+  serviceAccountName: team-2-deployer
+  sourceRef: {kind: GitRepository, name: XXX-apps-infrastructure}

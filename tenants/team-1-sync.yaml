@@ -1,0 +1,19 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata: {name: k8s-apps-infrastructure, namespace: team-1}
+spec:
+  interval: 5m
+  url: ssh://git@github.com/CyberBlock/k8s-apps-infrastructure
+  ref: {branch: main}
+  secretRef: {name: apps-infra-read}
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata: {name: apps-infra, namespace: team-1}
+spec:
+  interval: 10m
+  path: ./deploy/prod # root of teams infrastructure
+  prune: true
+  wait: true
+  serviceAccountName: team-1-deployer
+  sourceRef: {kind: GitRepository, name: k8s-apps-infrastructure}
