@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+- ../tenants.yaml
 
 patches:
 - target: {kind: Deployment, name: "(kustomize-controller|helm-controller|notification-controller|image-reflector-controller|image-automation-controller)"}
