@@ -5,6 +5,6 @@ spec:
   interval: 30m
   path: ./tenants
   prune: true
-  dependsOn: [{name: platform}]
+  # dependsOn: [{name: platform}]
   serviceAccountName: kustomize-controller
   sourceRef: {kind: GitRepository, name: flux-system}
