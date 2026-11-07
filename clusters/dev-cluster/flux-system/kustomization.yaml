@@ -4,6 +4,7 @@ resources:
 - gotk-components.yaml
 - gotk-sync.yaml
 - ../tenants.yaml
+- ../team-1-box-dev.yaml
 
 patches:
 - target: {kind: Deployment, name: "(kustomize-controller|helm-controller|notification-controller|image-reflector-controller|image-automation-controller)"}
