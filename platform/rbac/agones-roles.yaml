@@ -1,0 +1,47 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: platform-ext-agones
+  namespace: team-1
+  labels: {app.kubernetes.io/part-of: platform-root}
+rules:
+- apiGroups: ["agones.dev"]
+  resources: ["fleets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["autoscaling.agones.dev"]
+  resources: ["fleetautoscalers"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["agones.dev"]
+  resources: ["gameservers", "gameserversets"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: platform-ext-agones, namespace: team-1}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: platform-ext-agones}
+subjects: [{kind: ServiceAccount, name: team-1-deployer, namespace: team-1}]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-service
+  namespace: team-1
+  labels: {app.kubernetes.io/part-of: platform-root}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: platform-agones-allocator
+  namespace: team-1
+  labels: {app.kubernetes.io/part-of: platform-root}
+rules:
+- apiGroups: ["allocation.agones.dev"]
+  resources: ["gameserverallocations"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: platform-agones-allocator, namespace: team-1}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: platform-agones-allocator}
+subjects: [{kind: ServiceAccount, name: backend-service, namespace: team-1}]

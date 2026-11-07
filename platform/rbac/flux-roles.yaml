@@ -1,0 +1,28 @@
+# --- Flux API ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: platform-ext-flux, namespace: team-1}
+rules:
+- {apiGroups: [source.toolkit.fluxcd.io], resources: [gitrepositories, ocirepositories, helmrepositories], verbs: [get, list, watch, create, update, patch, delete]}
+- {apiGroups: [helm.toolkit.fluxcd.io], resources: [helmreleases], verbs: [get, list, watch, create, update, patch, delete]}
+- {apiGroups: [kustomize.toolkit.fluxcd.io], resources: [kustomizations], verbs: [get, list, watch, create, update, patch, delete]}
+- {apiGroups: [source.toolkit.fluxcd.io, helm.toolkit.fluxcd.io, kustomize.toolkit.fluxcd.io], resources: [helmcharts, "*/status"], verbs: [get, list, watch]}
+---
+# --- Flux image automation ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: platform-ext-flux-image, namespace: team-1}
+rules:
+- {apiGroups: [image.toolkit.fluxcd.io], resources: [imagerepositories, imagepolicies, imageupdateautomations], verbs: [get, list, watch, create, update, patch, delete]}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: platform-ext-flux, namespace: team-1}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: platform-ext-flux}
+subjects: [{kind: ServiceAccount, name: team-1-deployer, namespace: team-1}]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: platform-ext-flux-image, namespace: team-1}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: platform-ext-flux-image}
+subjects: [{kind: ServiceAccount, name: team-1-deployer, namespace: team-1}]
