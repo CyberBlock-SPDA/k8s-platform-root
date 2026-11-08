@@ -15,20 +15,3 @@ kind: RoleBinding
 metadata: {name: platform-metrics-read, namespace: team-1}
 roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: platform-metrics-read}
 subjects: [{kind: ServiceAccount, name: team-1-deployer, namespace: team-1}]
-
-# ---------------------------------------------------------------------------
-# DELAYED
-# - apiGroups: [""]
-#   resources: ["serviceaccounts"]
-#   verbs: ["get","list","watch","create","update","patch","delete"]
-# - apiGroups: ["rbac.authorization.k8s.io"]
-#   resources: ["roles","rolebindings"]
-#   verbs: ["get","list","watch","create","update","patch","delete"]
-# - apiGroups: ["policy"]
-#   resources: ["poddisruptionbudgets"]
-#   verbs: ["get","list","watch","create","update","patch","delete"]
-#
-# Триггер: в кластере появился Prometheus Operator и в чарте нужны ServiceMonitor/PodMonitor.
-# - apiGroups: ["monitoring.coreos.com"]
-#   resources: ["servicemonitors","podmonitors","prometheusrules"]
-#   verbs: ["get","list","watch","create","update","patch","delete"]

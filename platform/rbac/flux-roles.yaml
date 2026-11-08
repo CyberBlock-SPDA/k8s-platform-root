@@ -1,19 +1,30 @@
-# --- Flux API ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
-metadata: {name: platform-ext-flux, namespace: team-1}
+metadata:
+  name: platform-ext-flux
+  namespace: team-1
+  labels: {app.kubernetes.io/part-of: platform-root}
 rules:
-- {apiGroups: [source.toolkit.fluxcd.io], resources: [gitrepositories, ocirepositories, helmrepositories], verbs: [get, list, watch, create, update, patch, delete]}
-- {apiGroups: [helm.toolkit.fluxcd.io], resources: [helmreleases], verbs: [get, list, watch, create, update, patch, delete]}
-- {apiGroups: [kustomize.toolkit.fluxcd.io], resources: [kustomizations], verbs: [get, list, watch, create, update, patch, delete]}
-- {apiGroups: [source.toolkit.fluxcd.io, helm.toolkit.fluxcd.io, kustomize.toolkit.fluxcd.io], resources: [helmcharts, "*/status"], verbs: [get, list, watch]}
+- apiGroups: ["source.toolkit.fluxcd.io"]
+  resources: ["gitrepositories", "ocirepositories", "helmrepositories", "buckets", "externalartifacts"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["helm.toolkit.fluxcd.io"]
+  resources: ["helmreleases"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["kustomize.toolkit.fluxcd.io"]
+  resources: ["kustomizations"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
-# --- Flux image automation ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
-metadata: {name: platform-ext-flux-image, namespace: team-1}
+metadata:
+  name: platform-ext-flux-image
+  namespace: team-1
+  labels: {app.kubernetes.io/part-of: platform-root}
 rules:
-- {apiGroups: [image.toolkit.fluxcd.io], resources: [imagerepositories, imagepolicies, imageupdateautomations], verbs: [get, list, watch, create, update, patch, delete]}
+- apiGroups: ["image.toolkit.fluxcd.io"]
+  resources: ["imagerepositories", "imagepolicies", "imageupdateautomations"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
