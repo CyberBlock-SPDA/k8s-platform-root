@@ -1,10 +1,10 @@
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: platform-metrics-read
-  namespace: team-1
-  labels: {app.kubernetes.io/part-of: platform-root}
+  labels:
+    app.kubernetes.io/part-of: platform-root
 rules:
 - apiGroups: ["metrics.k8s.io"]
   resources: ["pods"]
@@ -12,6 +12,42 @@ rules:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata: {name: platform-metrics-read, namespace: team-1}
-roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: platform-metrics-read}
-subjects: [{kind: ServiceAccount, name: team-1-deployer, namespace: team-1}]
+metadata:
+  name: platform-metrics-read
+  namespace: team-1
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: platform-metrics-read
+subjects:
+- kind: ServiceAccount
+  name: team-1-deployer
+  namespace: team-1
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: platform-metrics-read
+  namespace: team-2
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: platform-metrics-read
+subjects:
+- kind: ServiceAccount
+  name: team-2-deployer
+  namespace: team-2
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: platform-metrics-read
+  namespace: team-3
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: platform-metrics-read
+subjects:
+- kind: ServiceAccount
+  name: team-3-deployer
+  namespace: team-3

@@ -1,20 +1,20 @@
 #TODO: replace xxx strings
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
-metadata: {name: xxx-apps-infrastructure, namespace: team-2}
+metadata: {name: SPDA_PUT, namespace: team-2}
 spec:
   interval: 5m
-  url: ssh://git@github.com/xxx
+  url: ssh://git@github.com/am1rkzn/SPDA_PUT
   ref: {branch: main}
-  secretRef: {name: apps-infra-read}
+  secretRef: {name: team-2-infra-read}
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
-metadata: {name: apps-infra, namespace: team-2}
+metadata: {name: team-2-infra, namespace: team-2}
 spec:
   interval: 10m
-  path: .xxx/deploy/prod # root of teams infrastructure
+  path: ./ # root of teams infrastructure
   prune: true
   wait: true
   serviceAccountName: team-2-deployer
-  sourceRef: {kind: GitRepository, name: xxx-apps-infrastructure}
+  sourceRef: {kind: GitRepository, name: SPDA_PUT}
