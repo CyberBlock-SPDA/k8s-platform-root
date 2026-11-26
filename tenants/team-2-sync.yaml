@@ -13,7 +13,7 @@ kind: Kustomization
 metadata: {name: team-2-infra, namespace: team-2}
 spec:
   interval: 10m
-  path: ./ # root of teams infrastructure
+  path: ./deploy # root of teams infrastructure
   prune: true
   wait: true
   serviceAccountName: team-2-deployer
