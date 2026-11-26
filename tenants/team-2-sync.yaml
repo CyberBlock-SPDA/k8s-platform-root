@@ -1,6 +1,6 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
-metadata: {name: spda_put, namespace: team-2}
+metadata: {name: spda-put, namespace: team-2}
 spec:
   interval: 5m
   url: ssh://git@github.com/am1rkzn/SPDA_PUT
@@ -16,4 +16,4 @@ spec:
   prune: true
   wait: true
   serviceAccountName: team-2-deployer
-  sourceRef: {kind: GitRepository, name: spda_put}
+  sourceRef: {kind: GitRepository, name: spda-put}
