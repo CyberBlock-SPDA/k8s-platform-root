@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - agones/agones.yaml
+  - traefik/default-tls-store.yaml
   - rbac/agones-roles.yaml
   - rbac/flux-roles.yaml
   - rbac/observability-role.yaml
