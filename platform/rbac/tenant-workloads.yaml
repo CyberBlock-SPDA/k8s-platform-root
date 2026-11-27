@@ -51,3 +51,32 @@ subjects:
   - kind: ServiceAccount
     name: team-1-deployer
     namespace: team-1
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: platform-ext-helm-storage
+  namespace: team-1
+  labels:
+    app.kubernetes.io/part-of: platform-root
+rules:
+  # Helm discovers its release records by label; RBAC cannot scope list by label.
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: platform-ext-helm-storage
+  namespace: team-1
+  labels:
+    app.kubernetes.io/part-of: platform-root
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: platform-ext-helm-storage
+subjects:
+  - kind: ServiceAccount
+    name: team-1-deployer
+    namespace: team-1
