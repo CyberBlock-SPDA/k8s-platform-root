@@ -3,9 +3,8 @@ kind: GitRepository
 metadata: {name: k8s-apps-infrastructure, namespace: team-1}
 spec:
   interval: 5m
-  url: ssh://git@github.com/CyberBlock-SPDA/k8s-apps-infrastructure
+  url: https://github.com/CyberBlock-SPDA/k8s-apps-infrastructure
   ref: {branch: main}
-  secretRef: {name: team-1-infra-read}
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
